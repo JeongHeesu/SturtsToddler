@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+	<WatchedResource>WEB-INF/web.xml</WatchedResource>
+	<Resource name="jdbc/ddit" 
+	          auth="pc04" 
+	          type="javax.sql.DataSource" 
+	          driverClassName="oracle.jdbc.driver.OracleDriver"
+			  url = "jdbc:oracle:thin:@localhost:1521:XE" 
+			  username="pc04" 
+			  password="java" 
+			  maxWait="-1"
+			  maxIdle="8" 
+			  removeAbandoned="true" 
+			  removeAbandonedTimeout="60" ></Resource>
+
+</Context>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<!-- 
+		스트러츠 설정 파일
+		규칙 :  한개이상의 패키지가 존재해야 하고, 패키지 내에는 한개 이상의 액션이 존재해야 함.
+				회원관리 패키지 - /member/memberForm.do=kr.or.ddit.member.controller.MemberFormAction
+							   /member/memberList.do=kr.or.ddit.member.controller.MemberListAction
+							   /member/memberView.do=kr.or.ddit.member.controller.MemberViewAction
+							   /member/memberInsert.do==kr.or.ddit.member.controller.MemberInsertAction
+							   /member/memberUpdate.do=kr.or.ddit.member.controller.MemberUpdateAction
+							   /member/memberdelete.do=kr.or.ddit.member.controller.MemberDeleteAction
+							    
+		package name: 다른 패키지와 구분을 위한 구분자 
+					  상속을 위한 접근자
+				extends : 스트럿츠 설정을 위해 활용되는 자원 파일	(default 필수 설정)
+						  상속을 위한 다른 패키지의 name
+				namespace : 클라이언트의 요청시 ServletPath 일부를 활용해서 해당 패키지를 특정 
+				abstract : 다른 패키지에 상속이 가능한 추상 패키지 설정
+				             * 추상패키지 내에는 액션 선언 불가능    
+		action name : 다른 액션과 구분을 위한 구분자
+					  클라이언트의 요청을 처리할 액션클래스 특정(ServletPath 의 일부분)   
+			    class : 액션 클래스 선언 
+			    type  : 
+		result name : success(default)
+					   액션클래스 내 액션 메서드의 반환 문자열
+		       type : dispatcher(default)   	   
+		       		   redirectAction -  다른 패키지 또는 동일 패키지의 액션으로 리다이렉트 요청
+		       		  chain - 다른 패키지 또는 동일 패키지의 액션으로 포워딩 요청	
+		       		  stream - 스트럿츠 프레임웍의 파일 다운로드 처리 	   
+	 -->
+	 <!-- http://localhost/StrutsToddler/helloStruts.do -->
+	 <package name="hello" extends="struts-default" namespace="/">
+	 	<action name="helloStruts">
+	 		<result>/WEB-INF/01/hello.jsp</result>
+	 	</action>
+	 </package>
+	 <include file="kr/or/ddit/struts/config/join.xml"></include>
+	 <include file="kr/or/ddit/struts/config/member.xml"></include>
+	 <include file="kr/or/ddit/struts/config/fileCtrl.xml"></include>
+	 <include file="kr/or/ddit/struts/config/tilesCall.xml"></include>
+</struts>

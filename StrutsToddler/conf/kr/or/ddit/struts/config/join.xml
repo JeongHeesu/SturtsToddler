@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<!-- 
+		http://location/StrutsToddler/join/lgoinForm.do?message=회원이 아닙니다.
+		http://location/StrutsToddler/join/loginCheck.do
+	 -->
+	<package name="joinPkg" extends="struts-default" namespace="/join">
+		<action name="loginForm" class="kr.or.ddit.join.controller.LoginFormAction">
+			<result>/WEB-INF/join/loginForm.jsp</result>
+		</action>
+		<action name="loginCheck" class="kr.or.ddit.join.controller.LoginCheckAction">
+			<result name="loginForm" type="redirectAction">
+				<param name="namespace">/join</param>
+				<param name="actionName">loginForm</param>
+				<param name="message">${message}</param>
+			</result>
+			<result name="memberList" type="chain">
+				<param name="namespace">/member</param>
+				<param name="actionName">memberList</param>
+			</result>
+		</action>
+	</package>
+</struts>

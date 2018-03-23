@@ -1,0 +1,318 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<!-- pom 모델 작성을위한 xsd 버젼 -->
+	<modelVersion>4.0.0</modelVersion>
+	<!-- 메이븐 툴에서 빌드 또는 라이브러리 의존성을 부여할 프로젝트를 구분하기위해서 활용되는 groupId and artifactId. -->
+	<!-- 프로젝트 생성 조직의 아이디. 보통 도메인을 설정함. -->
+	<groupId>Struts2Tiles</groupId>
+	<!-- 프로젝트 식별 유니크 아이디 -->
+	<artifactId>Struts2Tiles</artifactId>
+	<!-- 프로젝트 빌드 또는 릴리즈 버젼 -->
+	<version>0.0.1-SNAPSHOT</version>
+	<!-- 프로젝트 명 -->
+	<name>Struts2Tiles</name>
+	<!-- 프로젝트 url -->
+	<url>http://localhost/Struts2Tiles</url>
+	<!-- 메이븐을 이용해 특정한 프로젝트의 배포 방식을 설정 -->
+	<packaging>war</packaging>
+
+	<!-- 해당 프로젝트의 jar 팩키징시 처리 -->
+	<!-- <properties> -->
+	<!-- <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> -->
+	<!-- <deploy.target.dir>jar로 패키징될 패스의 루트</deploy.target.dir> -->
+	<!-- <lib.dir>lib</lib.dir> -->
+	<!-- <jar.name>Struts2Tiles</jar.name> -->
+	<!-- <mainclass>팩키지명.메인클래스</mainclass> -->
+	<!-- </properties> -->
+
+	<!-- 배포를 위한 처리(타겟 디렉토리 생성/삭제/수정/복사, 파일 생성/삭제/수정/복사, 컴파일 등의 일련의 설정 ) -->
+	<build>
+		<!-- 자바 원본 소스파일의 위치. src or src/main/java로 설정됨. 다수의 sourceDirectory 존재시 
+			|을 이용해 설정 -->
+<!-- 	<sourceDirectory>src|conf</sourceDirectory> -->
+		<!-- 메이븐 컴파일 플러그인을 이용해 자바 원본소스 파일들의 컴파일 결과물의 위치 -->
+<!-- 	<outputDirectory>target/classes</outputDirectory> -->
+		<plugins>
+			<!-- 다수의 플러그인을 정의할수있으며 하나의 플러그인에서 다수의 작업을 수행할수있으며, 각각의 작업을 goal이라 정의함. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<!-- 컴파일되는 소스파일의 jdk 버젼 -->
+					<source>1.6</source>
+					<!-- 바이트 코드 파일이 실행될 환경의 jdk 버젼 -->
+					<target>1.6</target>
+<!-- 				<encoding>UTF-8</encoding> -->
+				</configuration>
+			</plugin>
+			<!-- jar 팩키징 설정(상위에 선언된 properties의 설정을 활용함.) -->
+			<!-- <plugin> -->
+			<!-- <groupId>org.apache.maven.plugins</groupId> -->
+			<!-- <artifactId>maven-jar-plugin</artifactId> -->
+			<!-- <version>2.4</version> -->
+			<!-- <configuration> -->
+			<!-- <finalName>${jar.name}</finalName> -->
+			<!-- <outputDirectory>${deploy.target.dir}</outputDirectory> -->
+			<!-- <archive> -->
+			<!-- <manifest> -->
+			<!-- <mainClass>${mainclass}</mainClass> -->
+			<!-- <addClasspath>true</addClasspath> -->
+			<!-- <classpathPrefix>${lib.dir}/</classpathPrefix> -->
+			<!-- </manifest> -->
+			<!-- </archive> -->
+			<!-- </configuration> -->
+			<!-- </plugin> -->
+			<!-- pom.xml내 dependency를 통한 라이브러리를 팩키징 시 포함함. -->
+			<!-- <plugin> -->
+			<!-- <groupId>org.apache.maven.plugins</groupId> -->
+			<!-- <artifactId>maven-dependency-plugin</artifactId> -->
+			<!-- <version>2.3</version> -->
+			<!-- <executions> -->
+			<!-- <execution> -->
+			<!-- <id>copy-dependencies</id> -->
+			<!-- <phase>package</phase> -->
+			<!-- <goals> -->
+			<!-- <goal>copy-dependencies</goal> -->
+			<!-- </goals> -->
+			<!-- </execution> -->
+			<!-- </executions> -->
+			<!-- <configuration> -->
+			<!-- <outputDirectory>${deploy.target.dir}/${lib.dir}</outputDirectory> -->
+			<!-- <overWriteIfNewer>true</overWriteIfNewer> -->
+			<!-- </configuration> -->
+			<!-- </plugin> -->
+
+			<!-- war 팩키징 설정 -->
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<warSourceDirectory>WebContent</warSourceDirectory>
+<!-- 				<webXml>경로/webapp/WEB-INF/web.xml</webXml> -->
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
+			<!-- 서버에 war 파일 배포
+					톰캣설치디렉토리/conf/tomcat-users.xml에서 매니저 서비스 접속을위한 아이디 패스워드 입력 
+    				톰캣 http://localhost:8080/manager/html  매니저 서비스 접속
+                    maven과 톰캣의 매니저 아이디 패스워드를 통해 원격지 war 배포가 가능.
+			 -->
+<!-- 			<plugin> -->
+<!-- 				<groupId>org.codehaus.mojo</groupId> -->
+<!-- 				<artifactId>tomcat-maven-plugin</artifactId> -->
+<!-- 				<version>1.1</version> -->
+<!-- 				<configuration> -->
+<!-- 					<url>http://127.0.0.1:8080/manager</url> -->
+<!-- 					<path>/</path> -->
+<!-- 					<username>admin</username> -->
+<!-- 					<password>test</password> -->
+<!-- 				</configuration> -->
+<!-- 			</plugin> -->
+		</plugins>
+	</build>
+
+	<!-- 오라클은 라이센스 문제로 ojdbc14를 중앙저장소에서 다운로드할수없으므로 다운 저장소를 등록해 사용한다. -->
+	<repositories>
+		<repository>
+			<id>mesir-repo</id>
+			<url>http://mesir.googlecode.com/svn/trunk/mavenrepo</url>
+		</repository>
+	</repositories>
+
+	<!-- 특정한 프로젝트에 import 되어야할 라이브러리의 의존성 설정 -->
+	<dependencies>
+		<!-- Missing artifact com.sun tools.jar 못찾을때 조치 -->
+		<!-- <dependency> -->
+		<!-- <groupId>com.sun</groupId> -->
+		<!-- <artifactId>tools</artifactId> -->
+		<!-- <version>1.6.0</version> -->
+		<!-- <scope>system</scope> -->
+		<!-- <systemPath>D:\programs\Java\jdk1.6.0_32\lib\tools.jar</systemPath> -->
+		<!-- </dependency> -->
+
+		<dependency>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts2-core</artifactId>
+			<version>2.0.14</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.0.4</version>
+		</dependency>
+		<dependency>
+			<groupId>freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+			<version>2.3.8</version>
+		</dependency>
+		<dependency>
+			<groupId>opensymphony</groupId>
+			<artifactId>ognl</artifactId>
+			<version>2.6.11</version>
+		</dependency>
+		<dependency>
+			<groupId>com.opensymphony</groupId>
+			<artifactId>xwork</artifactId>
+			<version>2.0.7</version>
+			<classifier>j4</classifier>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-api</artifactId>
+			<version>2.2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-core</artifactId>
+			<version>2.2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-jsp</artifactId>
+			<version>2.2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-servlet</artifactId>
+			<version>2.2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-template</artifactId>
+			<version>2.2.2</version>
+		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.oracle</groupId> -->
+<!-- 			<artifactId>ojdbc14</artifactId> -->
+<!-- 			<version>10.2.0.4.0</version> -->
+<!-- 		</dependency> -->
+		<!-- 자신의 ojdbc6.jar로 메이븐 레포지토리 생성 cmd 창열고 그 경로에 가서 아래 명령어 실행 mvn install:install-file 
+			-Dfile=D:\programs\oraclexe\app\oracle\product\11.2.0\server\jdbc\lib\ojdbc6.jar 
+			-DgroupId=com.oracle -DartifactId=ojdbc6 -Dversion=11.2.0.3 -Dpackaging=jar 
+			-DgeneratePom=true -->
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc6</artifactId>
+			<version>11.2.0.3</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp.jstl</groupId>
+			<artifactId>jstl-api</artifactId>
+			<version>1.2-rev-1</version>
+		</dependency>
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jdom</groupId>
+			<artifactId>jdom2</artifactId>
+			<version>2.0.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.10</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-core-asl</artifactId>
+			<version>1.9.10</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-pool</groupId>
+			<artifactId>commons-pool</artifactId>
+			<version>1.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-digester</groupId>
+			<artifactId>commons-digester</artifactId>
+			<version>2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.4</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>1.8.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.ibatis</groupId>
+			<artifactId>ibatis-sqlmap</artifactId>
+			<version>2.3.4.726</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.4</version>
+		</dependency>
+		<dependency>
+			<groupId>backport-util-concurrent</groupId>
+			<artifactId>backport-util-concurrent</artifactId>
+			<version>2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.retrotranslator</groupId>
+			<artifactId>retrotranslator-runtime</artifactId>
+			<version>1.2.9</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.6.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.6.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>1.6.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-compress</artifactId>
+			<version>1.4.1</version>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.15</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>jms</artifactId>
+					<groupId>javax.jms</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jmxtools</artifactId>
+					<groupId>com.sun.jdmk</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jmxri</artifactId>
+					<groupId>com.sun.jmx</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>mail</artifactId>
+					<groupId>javax.mail</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+	</dependencies>
+</project>

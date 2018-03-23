@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>StrutsToddler</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  
+  <!-- 
+  	Struts2 프레임워크
+  	1. 다운로드
+  	 http://struts.apache.org
+  	 struts-2.0.14.zip
+  	2. WEB-INF/lib import
+  		commons-logging-1.0.4.jar
+  		freemarker-2.3.8.jar
+  		ognl-2.6.11.jar
+  		struts2-core-2.0.14.jar
+  		xwork-2.0.7.jar
+  	3. web.xml 스트럿츠 설정(필터등록)
+  	
+  	4. struts 설정파일(클래스패스 루트)
+  		struts.xml
+  	
+   --> 
+	  <filter>
+	  	<filter-name>struts</filter-name>
+	  	<filter-class>org.apache.struts2.dispatcher.FilterDispatcher</filter-class>
+	  </filter>
+	  <!-- 
+	  	Struts 프레임웍은 *.action default 
+	   -->
+  	  <filter-mapping>
+	  	<filter-name>struts</filter-name>
+  	  	<url-pattern>*.do</url-pattern>
+  	  </filter-mapping>
+  	  
+  	  <!-- 스트럿츠 프레임워크에서 타일즈 설정 -->
+  	  <context-param>
+  	  	<param-name>org.apache.tiles.impl.BasicTilesContainer.DEFINITIONS_CONFIG</param-name>
+  		<param-value>/WEB-INF/tiles/tiles-def.xml</param-value>
+  	  </context-param>
+  	  <listener>
+  	  	<listener-class>org.apache.struts2.tiles.StrutsTilesListener</listener-class>
+  	  </listener>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</web-app>

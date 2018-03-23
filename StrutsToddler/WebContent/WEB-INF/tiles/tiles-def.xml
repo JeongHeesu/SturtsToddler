@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+	<!-- 
+		타일즈 설정 파일(xml) : definition -  레이아웃 구성 단위. 상속가능
+								name - 다수의 definition을 구분하기 위한 유일한 값
+								template - 해당 definition내에 선언된 attribute의 name을 활용해서 실제 레이아웃을 구성하는 jsp
+								put-attribute -  c:import와 동일(포워딩0
+								extends - 다른 definition상속할때 사용
+		액션클래스 return / main.tiles
+			TilesDispatchServlet
+				TilesServlet
+					tiles-def.xml 에서 definotion name="main"을 찾음(없으면 404). 포워딩
+						definition(main) template의 jsp에 포워딩 처리
+											각각의 attribute를 구성하는 jsp로 포워딩
+	 -->
+	<definition name="main" template="/WEB-INF/user/mainTemplate.jsp">
+		<put-attribute name="title" value="엄마!!미안해!!!"></put-attribute>
+		<put-attribute name="header" value="/WEB-INF/user/layout/header.jsp"></put-attribute>
+		<put-attribute name="left" value="/WEB-INF/user/layout/left.jsp"></put-attribute>
+		<put-attribute name="content_header" value="/WEB-INF/user/content_header.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/user/layout/footer.jsp"></put-attribute>
+	</definition>
+	
+	<!-- 
+		return /user/freeboard/freeboardList.tiles
+		return /user/freeboard/freeboardForm.tiles
+		return /user/freeboard/freeboardView.tiles
+		return /user/memebr/memberList.tiles
+		return /user/memebr/memberFrom.tiles
+		return /user/memebr/memberView.tiles
+============================
+		return /admin/freeboard/freeboardList.tiles
+		return /admin/freeboard/freeboardForm.tiles
+		return /admin/freeboard/freeboardView.tiles
+		return /admin/memebr/memberList.tiles
+		return /admin/memebr/memberFrom.tiles
+		return /admin/memebr/memberView.tiles
+		
+		프로젝트  유저단	: /user/...
+				관리자단  : /admin/.....
+	 -->
+	
+	<definition name="user/*/*" extends="main">
+		<put-attribute name="content" value="/WEB-INF/user/{1}/{2}.jsp"></put-attribute>
+	</definition>
+
+	<definition name="admin/*/*" extends="main">
+		<put-attribute name="content" value="/WEB-INF/admin/{1}/{2}.jsp"></put-attribute>
+	</definition>
+
+	
+	
+	
+	
+	
+	
+	
+	
+</tiles-definitions>

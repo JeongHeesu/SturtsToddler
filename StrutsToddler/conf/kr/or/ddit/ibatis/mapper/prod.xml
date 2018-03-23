@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 위의 선언문 밑에 주석이 있어야 함 -->
+<!-- DB 쿼리문                       -->
+<!-- << 개정이력(Modification Information) >>            -->
+<!--   수정일          수정자          수정내용              -->
+<!--  =======      =======     =====================     -->
+<!--  2018.02.27.   정희수          최초작성                 -->
+<!-- Copyright (c) 2018 by DDIT  All right reserved      -->
+<!DOCTYPE sqlMap    
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map  2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="prod">
+	<typeAlias alias="prodVO" type="kr.or.ddit.vo.ProdVO"/>
+<!-- 	<resultMap class="java.util.HashMap" id="prodMap"> -->
+<!--       <result property="LPROD_ID"/> -->
+<!--       <result property="LPROD_GU"/> -->
+<!--       <result property="LPROD_NM"/> -->
+<!--       <result property="PROD_ID"/> -->
+<!--       <result property="PROD_NAME"/> -->
+<!--       <result property="PROD_LGU"/> -->
+<!--       <result property="PROD_BUYER"/> -->
+<!--       <result property="PROD_COST"/> -->
+<!--       <result property="PROD_PRICE"/> -->
+<!--       <result property="PROD_SALE"/> -->
+<!--       <result property="PROD_OUTLINE"/> -->
+<!--       <result property="PROD_DETAIL" jdbcType="CLOB" javaType="java.lang.String"/> -->
+<!--       <result property="PROD_IMG"/> -->
+<!--       <result property="PROD_TOTALSTOCK"/> -->
+<!--       <result property="PROD_INSDATE"/> -->
+<!--       <result property="PROD_PROPERSTOCK"/> -->
+<!--       <result property="PROD_SIZE"/> -->
+<!--       <result property="PROD_COLOR"/> -->
+<!--       <result property="PROD_DELIVERY"/> -->
+<!--       <result property="PROD_UNIT"/> -->
+<!--       <result property="PROD_QTYIN"/> -->
+<!--       <result property="PROD_QTYSALE"/> -->
+<!--       <result property="PROD_MILEAGE"/> -->
+<!--       <result property="PROD_DELETE"/> -->
+<!--    </resultMap> -->
+	
+	
+	<select id="prodList" resultClass="prodVO">
+		SELECT *
+		  FROM PROD
+	     WHERE PROD_DELETE = 'n'
+	</select>
+
+	<select id="getProdInfo" parameterClass="String" resultClass="java.util.HashMap">
+		SELECT *
+		  FROM PROD P INNER JOIN LPROD L ON(P.PROD_LGU=L.LPROD_GU)
+		 WHERE PROD_ID = #prod_id#
+	</select>
+
+	<update id="updateProd" parameterClass="prodVO">
+		UPDATE  PROD
+		   SET          
+				PROD_COST = #prod_cost#,
+				PROD_PRICE = #prod_price#,
+				PROD_SALE = #prod_sale#,
+				PROD_DETAIL = #prod_detail#,
+				PROD_TOTALSTOCK = #prod_totalstock#,
+				PROD_PROPERSTOCK = #prod_properstock#,
+				PROD_INSDATE = #prod_insdate#
+		WHERE   PROD_ID = #prod_id#		
+	</update>
+	
+	<insert id="insertProdInfo">
+		INSERT INTO PROD (
+			PROD_ID,
+			PROD_NAME,
+			PROD_LGU,
+			PROD_IMG,
+			PROD_BUYER,
+			PROD_COST,
+			PROD_PRICE,
+			PROD_SALE,
+			PROD_OUTLINE,
+			PROD_DETAIL,
+			PROD_TOTALSTOCK,
+			PROD_PROPERSTOCK,
+			PROD_INSDATE,
+			PROD_SIZE,
+			PROD_COLOR,
+			PROD_UNIT,
+			PROD_QTYIN
+		)
+		VALUES(
+			#prod_id#,
+			#prod_name#,
+			#prod_lgu#,
+			#prod_img#,
+			#prod_buyer#,
+			#prod_cost#,
+			#prod_price#,
+			#prod_sale#,
+			#prod_outline#,
+			#prod_detail:CLOB#,
+			#prod_totalstock#,
+			#prod_properstock#,
+			#prod_insdate#,
+			#prod_size#,
+			#prod_color#,
+			#prod_unit#,
+			#prod_qtyin#
+		)
+	</insert>
+	
+	<update id="deleteProdInfo" parameterClass="String">
+		UPDATE PROD
+		   SET PROD_DELETE = 'y'
+		 WHERE PROD_ID = #prod_id#
+	</update>
+	
+	
+</sqlMap>

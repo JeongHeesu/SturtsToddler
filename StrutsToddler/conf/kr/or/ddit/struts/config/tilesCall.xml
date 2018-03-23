@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<!-- 
+		액션 엘리면트 내의 리절트 엘리먼트의 type에 tiles Definition의 접근 선언을 위해서는 팩키지에 extends="struts-default,tiles-default"선연
+		struts-default,tiles-default 공백 없음
+	 -->
+	<package name="tilesPkg" extends="struts-default,tiles-default" namespace="/freeboard">
+		<action name="freeboardList">
+			<result type="tiles">user/freeboard/freeboardList</result>
+		</action>
+	</package>
+</struts>

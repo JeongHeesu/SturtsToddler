@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 위의 선언문 밑에 주석이 있어야 함 -->
+<!-- iBatis 환경설정                        -->
+<!-- << 개정이력(Modification Information) >>            -->
+<!--   수정일          수정자          수정내용              -->
+<!--  =======      =======     =====================     -->
+<!--  2018.02.19.   정희수          최초작성                 -->
+<!--  2018.02.19.   정희수         	member.xml 매퍼 경로병경                 -->
+<!--  2018.02.27.   정희수         	prod.xml 생성                 -->
+<!--  2018.03.05.   정희수         	zipcode.xml 생성                 -->
+<!--  2018.03.14.   정희수         	feilItem.xml 생성                 -->
+<!--  2018.03.14.   정희수         	idpicture.xml 생성                 -->
+<!-- Copyright (c) 2018 by DDIT  All right reserved      -->
+<!DOCTYPE sqlMapConfig      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+<sqlMapConfig>
+	<properties resource="kr/or/ddit/ibatis/config/SqlMapConfig.properties" />
+	<settings cacheModelsEnabled="true" enhancementEnabled="true"
+		lazyLoadingEnabled="true" maxRequests="32" maxSessions="10"
+		maxTransactions="5" useStatementNamespaces="true" />
+	<!-- 
+		type="SIMPLE" : 프로그래밍 코드로부터 데이타베이스 컨텍션 취득 요청 시 매번 신규 커넥션 생성 제공
+		type="DBCP"   : 서비스 환경을 고려한 컨넥션 제공과 반납 운영
+						DataBase Connection Pool(DBCP) 를 활용, 
+						1. http://commons.apache.org
+						   common-dbcp-1.4.jar
+						   common-pool-1.6.jar
+						2. WEB-INF/lib import
+		JNDI (Java Naming Directory Invoke) : 로컬 또는 원격지 서버의 자원을 해당 자원 등록시의 이름을 활용해서 취득.
+	 -->
+	<transactionManager type="JDBC">
+<!-- 	<dataSource type="SIMPLE"> -->
+<!-- 		<property name="JDBC.Driver" value="${driver}" /> -->
+<!-- 		<property name="JDBC.ConnectionURL" value="${url}" /> -->
+<!-- 		<property name="JDBC.Username" value="${username}" /> -->
+<!-- 		<property name="JDBC.Password" value="${password}" /> -->
+<!-- 	</dataSource> -->
+		
+		
+<!-- 		<dataSource type="DBCP"> -->
+<!-- 			<property name="driverClassName" value="${driver}"/> -->
+<!-- 			<property name="url" value="${url}"/> -->
+<!-- 			<property name="username" value="${username}"/> -->
+<!-- 			<property name="password" value="${password}"/> -->
+<!-- 			<property name="maxActive" value="10"/> -->
+<!-- 			<property name="maxIdle" value="8"/> -->
+<!-- 			<property name="maxWait" value="-1"/> -->
+<!-- 			<property name="removeAbandoned" value="true"/>			 -->
+<!-- 			<property name="removeAbandonedTimeout" value="60"/>			 -->
+<!-- 		</dataSource> -->
+		<dataSource type="JNDI">
+			<property name="DBJndiContext" value="java:comp/env/jdbc/ddit"/>
+		</dataSource>
+	</transactionManager>
+	
+	<sqlMap resource="kr/or/ddit/ibatis/mapper/member.xml"/>
+	<sqlMap resource="kr/or/ddit/ibatis/mapper/prod.xml"/>
+	<sqlMap resource="kr/or/ddit/ibatis/mapper/lprod.xml"/>
+	<sqlMap resource="kr/or/ddit/ibatis/mapper/buyer.xml"/>
+	<sqlMap resource="kr/or/ddit/ibatis/mapper/zipcode.xml"/>
+	<sqlMap resource="kr/or/ddit/ibatis/mapper/freeboard.xml"/>
+	<sqlMap resource="kr/or/ddit/ibatis/mapper/fileItem.xml"/>
+	<sqlMap resource="kr/or/ddit/ibatis/mapper/idpicture.xml"/>
+</sqlMapConfig>
+
+
+
+
+
+

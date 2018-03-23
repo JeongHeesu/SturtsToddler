@@ -1,0 +1,56 @@
+Maven
+1. 역활 : 소스코드 빌드 환경 설정 및 활용
+          빌드 산출물을 대상으로 로컬 또는 원격지 서버 대상 배포 설정 및 활용
+          라이브러리 의존성 관리
+          빌드 또는 배포에따른 리포팅 제공
+          
+2. 설치
+   2.1 다운로드
+       2.1.1 http://maven.apache.org
+               apache-maven-3.0.4-bin.zip
+   2.2 설치(압축 해제)
+   
+   2.3 메이븐 중앙저장소를 통해 다운로드 받은 라이브러리 저장소 설정
+       2.3.1 파일패스\apache-maven-3.0.4\conf\settings.xml
+             <localRepository>D:\B_Util\mavenLocalRepo</localRepository>
+   
+   2.4 메이븐 환경변수 등록        
+        변수등록 
+        변수이름 : MAVEN_HOME
+        변수값 : 메이븐 설치 폴더
+       
+       Path : ;%MAVEN_HOME%\bin;
+       
+   2.5 cmd -> mvn -version
+   
+   2.6 플러그인 설치
+        가) 인디고
+	        이클립스 메이븐 플러그인 설치
+	       [Help] -> [Install New Software] -> 콤보박스 내에서
+	       -> Indigo - http://download.eclipse.org/releases/indigo -> 팬딩
+	       -> Collaboration 메뉴에 m2e-Maven Integration for Eclipse  선택
+	                              m2e-slf4j over logback logging(option)선택
+	       -> 인스톨
+        나) Kepler 이상 버전 기 설치
+         
+   2.7 [Window] -> [Preferences] -> [Maven] -> [Installations] ->
+                                               [Add] -> 메이븐 설치 폴더 선택 -> [Apply]
+                                            -> [User Settings] ->
+                                               [Browse] -> 메이븐 설치 폴더\conf\settings.xml 선택 
+                                            -> [Update Settings] -> [Apply] -> [OK] 
+3. 기존 프로젝트(Java Project or Dynamic Web Project) 메이븐 적용
+   3.1 대상 프로젝트 선택 -> 오른쪽 마우스 클릭 -> [Configure] ->
+       [Convert to Maven Project] -> 대상 프로젝트에 메이븐 적용
+       -> target 폴더 생성 및 pom.xml 생성
+       
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   

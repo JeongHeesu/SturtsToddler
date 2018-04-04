@@ -23,7 +23,7 @@ public class IdCheckAction {
 	private MemberVO memberInfo;
 	
 	public void execute(){
-		Map<String, String> params = new HashMap<String, String>();
+ 		Map<String, String> params = new HashMap<String, String>();
 		params.put("mem_id", mem_id);
 		
 		IMemberService service = IMemberServiceImpl.getInstance();

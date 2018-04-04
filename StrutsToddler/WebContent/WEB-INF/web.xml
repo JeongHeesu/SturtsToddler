@@ -48,26 +48,8 @@
   	  	<listener-class>org.apache.struts2.tiles.StrutsTilesListener</listener-class>
   	  </listener>
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  	<listener>
+  		<listener-class>kr.or.ddit.listener.LogbackInitializeListener</listener-class>
+  	</listener>
+
 </web-app>

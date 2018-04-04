@@ -27,9 +27,8 @@ public class LoginCheckAction {
 		HttpServletRequest requset = ServletActionContext.getRequest();
 		HttpSession session = requset.getSession();
 		//암호문을 세션 내 저장된 비밀키를 활용해서 평문으로 변경.
-		mem_id = CryptoGenerator.decryptoRSA(session, mem_id);
-		
-		mem_pass = CryptoGenerator.decryptoRSA(session, mem_pass);
+//		mem_id = CryptoGenerator.decryptoRSA(session, mem_id);
+//		mem_pass = CryptoGenerator.decryptoRSA(session, mem_pass);
 		
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("mem_id", mem_id);

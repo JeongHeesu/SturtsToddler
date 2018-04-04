@@ -1,0 +1,207 @@
+테스트(단위테스트, 통합테스트, 성능테스트, 인수테스트) -> 논리적인 결함 추출에 활용함.
+
+* 소프트웨어 개발시 테스트 정책서(테스트 조직단위로 작성), 전략서(IEEE829 표준을 따르며 테스트 정책을 수립해야함.),
+   테스트계획서(스케줄과 테스트 시나리오, 테스트 케이스가 포함됨.)는 요구사항 정의 단계에서부터 착수하여 구현단계까지 마무리하고 
+   테스트를 수행한다. 
+  "비용을 천문학적으로 증가시킴에도 불구하고 프로젝트에 정말 아무런 도움이 되지도 않는 단위 테스트를 작성하기란 정말 쉽다."
+  
+* 단위 테스트는 버그를 찾기 위한 것이 아니다.
+
+* 좋은 단위 테스트를 작성하기 위한 팁들
+      1) 하나의 테스트 케이스는 단위 기능 중 하나의 시나리오만 테스트하라 
+	  2) 불필요한 검증 구문은 작성하지 마라
+	  3) 각 테스트는 독립적이어야 한다
+	  4) 테스트에 필요한 모든 외부서비스와 상태들은 스텁으로 제공되야 한다
+	  5) 시스템 설정파일에 관한 단위 테스트를 작성하지마라
+	  6) 단위 테스트 케이스의 이름은 명확하고 일관되게 테스트의 의미를 반영해야한다
+	  7) 외부 시스템이나 서비스에 대한 의존성이 가장 낮은 메소드들에 대해 테스트를 먼저 작성하라 그리고 확장해 가라
+	  8) private 메소드를 포함한 모든 메소드들은 가시범위에 상관없이 적절한 단위 테스트들을 작성해야 한다
+	  9) 각각의 단위 테스트 메소드는 정확히 하나의 검증구문을 가져야 한다
+	  10) 예상된 예외 사항을 테스트하는 단위 테스트 코드를 작성하라
+	  11) 가장 적합한 검증 구문을 사용하라
+	  12) 검증 구문 파라미터들은 적합한 순서대로 배치하라
+	  13) 테스트를 위한 코드는 제품 코드에서 분리되어야 한다
+	  14) 단위 테스트 내에서 아무것도 출력하지 마라
+	  15) 정적 변수를 테스트 클래스에 사용하지 마라
+	  16) 예외 발생시 단순히 테스트를 실패하기 위한 catch 구문을 작성하지 마라
+	  17) 간접적인 테스트에 의존하지 마라
+	  18) 위 테스트를 자동으로 실행하게 빌드 스크립트를 작성해라
+	  19) 단위 테스트들의 실행을 생략하지 마라(@Ignore 어노테이션을 사용하지 마라)
+	  20) 테스트 결과를 XML 형태로 출력하라
+	  
+1. JUnit 라이브러리를 이용한 단위테스트 수행
+   * https://junit.org/junit4/
+   * JUnit 4.x 특징
+     - Java 5 이상 지원
+     - 어노테이션 지원(@Test, @BeforeClass, @AfterClass, @Before, @After, @Ignore, @Test(timeout=1000), @Test(expected=ArithmeticException.class)
+         @BeforeClass : 테스트 클래스 내에서 수행 전 한 번만 실행되며 어노테이션이 선언된 메서드의 접근외지정자 static.
+         @AfterClass : 테스트 클래스 내에서 수행 후 한 번만 실행되며 어노테이션이 선언된 메서드의 접근외지정자 static.
+         @Before : 테스트 케이스 수행 전 반복실행
+         @After : 테스트 케이스 수행 후 반복실행
+         @Test : 테스트 메소드 지정.(테스트 메서드 명명시 [prefix, suffix test 열거] 미준수 가능)
+     - Hamcrest 지원
+     - 시간제한 테스트 지원
+     - 배열 지원
+     - 작성된 테스트 메서드 무시
+         @Ignore : 테스트 메소드 무시
+     
+   * eclipse 4.x버전 내 JUnit을 이용한 단위테스트 수행을 위한 환경은 이미 구성되어있음.
+       - 대상 프로젝트 선택 -> 오른쪽 마우스 클릭 -> properties -> Java Build Path -> 
+         Libraries 탭 -> [Add Library] -> [JUnit] -> [Next] -> JUnit 버전 선택 -> [Finish]
+       - Window -> Preferences -> Java -> JUnit -> Add '-ea' to VM arguments.... 체크 -> 
+         [Apply] -> [OK] 
+         * 단위 테스트 수행 시 default로 JVM 단위 테스트 실행 환경의 재사용을 방지하고, 신규 테스트 실행시마다 새로운 JVM을 
+                활용해 단위 테스트 수행
+   
+   * eclipse plug-in Fast Code 설치(선택)
+       - 다운로드 : http://fast-code.sourceforge.net/ 
+       - download jar 파일 -> 해당 eclipse 설치 폴더 \plugin\추가
+       - eclipse 재실행
+       - window -> Preferences -> Fast Code -> Default Source Path For Java : 대상 프로젝트 구조 맵핑
+                                               Default Source Path For Unit Test : 대상 프로젝트 구조 맵핑
+       - 테스트 대상 메소드 전체 블럭 지정 후 ctrl+alt+shift+u 입력 및 설정해 활용.
+           
+   1.1 테스트 대상의 클래스와 해당 클래스내 메서드를 확정함.
+   1.2 이클립스 junit 라이브러리와 플러그인을 활용 테스트 클래스(테스트 케이스)를 작성.
+       (테스트 계획서 기반으로 작성함.)
+       1.2.1 생성마법사 -> junit Test Case -> 테스트 팩키지는 별도로 구성.
+                                                               테스트 클래스명은 타겟 클래스명+"Test"로 명명함.
+             -> next -> 테스트 대상 메서드 체크 -> finish   
+       1.2.2 junit 라이브러리의 활용
+             API : https://junit.org/junit4/javadoc/latest/
+             	assertEquals(비교값, 타겟 클래스의 대상 메서드 호출) - 타겟 클래스의 대상 메서드 호출 후 반환값과 비교값 동일 여부
+				assertFalse(타겟 클래스의 대상 메서드 호출) - 타겟 클래스의 대상 메서드 호출 후 반환값이 false 여부
+				assertTrue(타겟 클래스의 대상 메서드 호출) - 타겟 클래스의 대상 메서드 호출 후 반환값이 true 여부
+				assertNull(타겟 클래스의 대상 메서드 호출) - 타겟 클래스의 대상 메서드 호출 후 반환값이 null 여부
+				assertNotNull(타겟 클래스의 대상 메서드 호출) - 타겟 클래스의 대상 메서드 호출 후 반환값이 not null 여부
+				assertSame(비교객체, 타겟 클래스의 대상 메서드 호출) - 타겟 클래스의 대상 메서드 호출 후 반환객체와 비교객체의 동일한 객체 여부	
+				assertNotSame(비교객체, 타겟 클래스의 대상 메서드 호출) - 타겟 클래스의 대상 메서드 호출 후 반환객체와 비교객체의 상이한 객체 여부
+				assertThat(비교값 또는 비교객체, is(타겟 클래스의 대상 메서드 호출을 통한 반환값 또는 반환객체))
+				fail(메세지) - 테스트 실패 처리 및 코맨트      
+       1.2.3 단위 테스트를 위한 Test Case 클래스는 junit.framework.TestCase를 상속받아 구현시 다수의 테스트 클래스를 패키징한 
+             Test Suite(junit.framework.TestSuite) 단위로  테스트 수행이 가능
+	             public static Test suite(){
+	                TestSuite suite = new TestSuite();
+	                suite.addTestSuit([테스트 클래스1 extends TestCase].class);
+	                suite.addTestSuit([테스트 클래스2 extends TestCase].class);
+	             	return suite;
+	             }
+        
+       1.2.4 테스트 실행
+                  가) 테스트 클래스 -> Run as or Debug as -> JUnit Test로 실행 -> 실행결과확인(JUnit View)
+                  
+   1.3 elcEmma를 활용한 단위테스트 코드 커버리지 출력
+
+2. 가상(모의) 객체 : Mock Object
+   2.1 관련 용어
+          가) Test Basis : 테스트 요소 또는 대상의 개발 산출물 전체.
+          나) Test Case : 테스트 요소(대상)를 타겟으로 예상하는(정상 또는 이상) 동작 상태를 정의하고 테스트 코드를 작성.
+          다) Test Suite : 테스트 케이스 그룹.
+          라) Test Scenario : 테스트 케이스와 테스트 스위트들을 대상으로 동작 순서를 기술한 테스트 절차 명세.
+          마) Test Procedure(Test Script) : 테스트 시나리오 작성 간 실행 우선순위를 고혀한 동작 순서.
+	    바) Test Double : 가상 모듈을 활용한 테스트 수행 행위에 필요한 자원과 행위.
+	    사) Mock Object : 테스트 대상 모듈과 연계된 미성숙한 모듈 대상으로 작성된 테스트 가상 모듈
+          아) Mock Up : Mock Object 작성 과정
+	    자) Stub : Mock Object의 메서드를 호출하는 행위
+	    차) Stubbing : Mock Object를 대상으로 한 테스트 과정에서 해당 Mock Object의 메서드 호출시에
+	                         반환값을 설정하는 행위
+          카) Test Oracle : Stubbing을 통한 반환값을 대상으로 예상결과를 결정하는 근거 데이타(반환값 대상의 비교값) 
+          
+   2.2 모의객체 작성 및 활용 프레임워크
+          가) EasyMock : http://easymock.org/
+          나) Mockito  : http://site.mockito.org/
+          다) JMock    : http://jmock.org/
+           
+   2.3 Mockito의 활용(Junit Assertion 메서드와 병행 활용)
+       * http://site.mockito.org/
+       * API : http://static.javadoc.io/org.mockito/mockito-core/1.10.19/org/mockito/Mockito.html
+          가) Mock Object 생성
+               모의객체타입 모의객체 = Mockito.mock(모의객체 작성 대상 클래스.class)
+               모의객체타입 모의객체 = mock(모의객체 작성 대상 클래스.class, withSettings()가 반환하는 MockSettings를 활용한 목업)
+          나) verify : Mock Object의 메서드명 호출, 호출횟수 및 반환값 대상 단위 테스트
+                   Mock Object의 메서드 Stub 이후 설정하여 해당 Mock Object의 메서드 Stub 여부 테스트 
+          
+          verify(모의객체).모의객체메서드명();                                           // 해당 Mock Object 내 해당 메서드 Stub 여부
+          verify(모의객체, times(3)).모의객체메서드명(아귀먼트 값 특정);                      // 해당 Mock Object 내 해당 메서드 3회 Stub 여부
+          verify(모의객체, timeout(100).times(3)).모의객체메서드명(아귀먼트 값 특정);         // 해당 Mock Object 내 해당 메서드를 밀리세컨즈 100 내 3회 Stub 여부        
+          verify(모의객체, atLeastOnce()).모의객체메서드명(anyDouble());                 // 해당 Mock Object 내 해당 메서드 최소 1회 이상 Stub 여부
+                                                                                 // 임의의 아귀먼트 설정 : anyInt(), anyLong(), anyMap()...
+          verify(모의객체, atLeast(2)).모의객체메서드명(아귀먼트, anyCollaction());         // 해당 Mock Object 내 해당 메서드 최소 2회 이상 Stub 여부
+          verify(모의객체, atMost(2)).모의객체메서드명(아귀먼트);        // 목 클래스 내 해당 메서드 2회 이하 Stub 여부
+          다) when() : Mock Object의 Stub에따라 조건에 따른 Stubbing 설정(반환값 설정)
+                   when()을 활용한 Stubbing 설정 이후 Mock Object의 Stub 수행
+                   when()을 활용한 Stubbing 설정의 초기화 : reset(모의객체)
+                   
+          when(모의객체.메서드명()).thenReturn()                                      // 해당 Mock Object의 해당 메서드 stub를 통해 반환값이 없이 stubbing 설정
+          when(모의객체.메서드명(anyByte())).thenReturn("반환값")                       // 해당 Mock Object의 해당 메서드 stub를 통해 문자열 반환값 stubbing 설정
+          when(모의객체.메서드명(anyByte(), anyObject())).thenReturn(true)            // 해당 Mock Object의 해당 메서드 stub를 통해 boolean 반환값 stubbing 설정
+          when(모의객체.메서드명()).thenReturn("반환값1").thenReturn("반환값2").thenReturn("반환값3") // 해당 Mock Object의 해당 메서드 stub 횟수에따라 다른 반환값 stubbing 설정
+            => when(모의객체.메서드명()).thenReturn("반환값1", "반환값2", "반환값3")와 동일
+          
+          when(모의객체.메서드명()).thenThrow(new RuntimeException())                    // 해당 Mock Object의 해당 메서드 stub를 통해 익셉션 발생 stubbing 설정
+          when(모의객체.메서드명()).thenReturn("반환값1", "반환값2", new RuntimeException()) // 해당 Mock Object의 해당 메서드 stub 횟수에따라 다른 반환값 stubbing 설정
+          
+          when(모의객체.메서드명("a001")).thenAnswer(new Answer<MemberVO>() {            // 해당 Mock Object의 해당 메서드 stub를 통해 반환값을 임의 설정하여 반환값 stubbing 설정
+					@Override
+					public MemberVO answer(InvocationOnMock invocation)
+							throws Throwable {
+						MemberVO memberVO = new MemberVO();
+						memberVO.setMem_id("a001");
+						memberVO.setMem_pass("asdfasdf");
+						memberVO.setMem_name("김은대");
+						return memberVO;
+					}
+          })
+          
+          라) InOrder : Mock Object들의 Stub 순서 테스트
+                    InOrder inOrder = inOrder(Mock Object1, Mock Object2, ....)
+                    inOrder.verify(Mock Object1).stub 대상 메서드명()                 
+                    inOrder.verify(Mock Object2).stub 대상 메서드명()                 
+      
+          마) ShortCut
+          @RunWith(MockitoJUnitRunner.class)
+              - @RunWith(MockitoJUnitRunner.class)
+                public class 단위 테스트 클래스{}
+                == public class 단위 테스트 클래스 extends TestCase{} 선언과 동일
+              - @Mock
+                private List mockList;
+                == List mockList = Mockito.mock(List.class) or mock(List.class) 선언과 동일
+              - @InjectMocks
+                Mock Object의 인스턴스가 주입되어야하는 특정 테스트 대상 구현 클래스
+                == 인터페이스를 대상으로 한 Mock Up의 결과가 특정 구현 클래스의 생성자를 통해 주입되어야하는 경우 활용
+              - @Spy
+                == @InjectMocks에서 인터페이스가 아닌 구현 클래스의 경우 활용되어 @InjectMocks와 동일하게 사용
+              - @Test
+                       테스트 메서드 명명시 (prefix, suffix test 열거) 미준수 가능
+               
+       ************** MockHttpServletRequest Spring jar....
+
+3. Hamcrest
+   3.1 다양한 프로그래밍 언어를 지원하며, Hamcrest의 Matcher를 통해 JUnit assertion의 비교 자원의 확장
+   
+   3.2 http://hamcrest.org/
+       Download : https://code.google.com/archive/p/hamcrest/downloads
+       Tutorial : https://www.javacodegeeks.com/2015/11/hamcrest-matchers-tutorial.html
+       API : http://hamcrest.org/JavaHamcrest/javadoc/1.3/org/hamcrest/Matchers.html
+        allOf()                      is()                               contains()
+		hasSize()                    isA()                              iterableWithSize()
+		any()                        isEmptyOrNullString()              containsInAnyOrder()
+		hasToString()                isEmptyString()                    lessThan()
+		anyOf()                      isIn()                             containsString()
+		hasValue()                   isOneOf()                          lessThanOrEqualTo()
+		anything()                   arrayContainingInAnyOrder()        describedAs()
+		hasXPath()                   arrayWithSize()                    not()
+		array()                      both()                             either()
+		instanceOf()                 closeTo()                          notNullValue()
+		arrayContaining()            comparesEqualTo()                  empty()
+		nullValue()                  equalTo()                          hasItems()
+		emptyArray()                 typeCompatibleWith()               hasKey()
+		sameInstance()               equalToIgnoringCase()              hasProperty()
+		emptyCollectionOf()          equalToIgnoringWhiteSpace()
+		samePropertyValuesAs()       eventFrom()
+		emptyIterable()              everyItem()
+		startsWith()                 greaterThan()
+		emptyIterableOf()            greaterThanOrEqualTo()
+		stringContainsInOrder()      hasEntry()
+		endsWith()                   hasItem()
+		theInstance()                hasItemInArray()
